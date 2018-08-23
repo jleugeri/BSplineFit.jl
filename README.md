@@ -24,4 +24,4 @@ plot(t->bf(t), 0, 7)
 
 The example [examples/plot.jl](examples/plot.jl) demonstrates the usage and produces the following output:
 
-![results](examples/plot.jl)
+![results](/examples/fit.svg)
