@@ -1,0 +1,4 @@
+name = "BSplineFit"
+uuid = "51bb0b80-a6f9-11e8-0267-dd8331ba46d2"
+authors = ["jleugeri <jleugeri@uos.de>"]
+version = "0.1.0"
