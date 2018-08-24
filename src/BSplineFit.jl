@@ -52,7 +52,7 @@ function decompose(x, y, order, knots; include_component=1:(length(knots)-1+orde
     
     for (i,b) ∈ enumerate(basis)
         bx = b.(x)
-        comp[i,:] .= sum(bx .* y, dims=1) ./ sum(bx, dims=1)
+        comp[i,:] = sum(bx .* y, dims=1) ./ sum(bx, dims=1)
     end
     return _augment_knots(knots, order)[order.+include_component], comp
 end
