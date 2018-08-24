@@ -1,5 +1,7 @@
 module BSplineFit
-export Bspline1D, BSpline1DBasis, fit
+export Bspline1D, BSpline1DBasis, fit, decompose
+
+_augment_knots(knots, order) = [fill(knots[1],order);knots;fill(knots[end],order)]
 
 struct BSpline1D{O,KT,CT}
     knots::Vector{KT}
@@ -7,7 +9,7 @@ struct BSpline1D{O,KT,CT}
 end
 
 BSpline1D(order, knots, coeffs=zeros(length(knots)+order)) = 
-    BSpline1D{order, eltype(knots), eltype(coeffs)}([fill(knots[1],order);knots;fill(knots[end],order)], coeffs)
+    BSpline1D{order, eltype(knots), eltype(coeffs)}(_augment_knots(knots, order), coeffs)
 
 function BSpline1DBasis(order, knots, id)
     b = BSpline1D(order, knots)
@@ -33,14 +35,26 @@ function (s::BSpline1D{O,KT,CT})(x) where {O,KT,CT}
 end
 
 function fit(x, y, order, knots)
-    num_basis = length(knots)+order
+    num_basis = length(knots)+order-1
     basis = [BSpline1DBasis(order, knots, id) for id ∈ 1:num_basis]
     M = [b(px) for px ∈ x, b ∈ basis]
     
     c = M\y
     b = BSpline1D(order, knots)
-    b.coeffs .= c
+    b.coeffs[1:num_basis] .= c
     return b
+end
+
+function decompose(x, y, order, knots; include_component=1:(length(knots)-1+order))
+    basis = [BSpline1DBasis(order, knots, id) for id ∈ include_component]
+    
+    comp = zeros(eltype(y), length(include_component), size(y, 2))
+    
+    for (i,b) ∈ enumerate(basis)
+        bx = b.(x)
+        comp[i,:] .= sum(bx .* y, dims=1) ./ sum(bx, dims=1)
+    end
+    return _augment_knots(knots, order)[order.+include_component], comp
 end
 
 end # module
