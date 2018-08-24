@@ -22,9 +22,9 @@ bf = fit(data_x, data_y, order, knots)
 plot(t->bf(t), 0, 7)
 ```
 
-The example [examples/plot.jl](examples/fit.jl) demonstrates the usage and produces the following output:
+The example [examples/fit.jl](examples/fit.jl) demonstrates the usage and produces the following output:
 
-![results](examples/plot.jl)
+![results](examples/fit.svg)
 
 ## Decomposing data
 To decompose a dataset into the weighted linear combinations 
