@@ -29,7 +29,7 @@ The example [examples/fit.jl](examples/fit.jl) demonstrates the usage and produc
 ## Decomposing data
 To decompose a dataset into the weighted linear combinations 
 
-(cᵢ= ∑ⱼfᵢ(xⱼ)⋅yⱼ) / (),  
+(cᵢ= ∑ⱼfᵢ(xⱼ)⋅yⱼ) / (∑ⱼfᵢ(xⱼ)),  
 
 where fᵢ are the basis
 functions of BSpline, xⱼ are the N locations of data points and yⱼ are the respective values,
